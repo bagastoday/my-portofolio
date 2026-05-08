@@ -17,10 +17,10 @@ export default function BGMFinalDeploy() {
   const sliders = [
     {
       id: 1,
-      title: "Limited Drop 01",
-      subtitle: "Atelier Work Jacket",
-      price: "Rp 449.000",
-      img: "/images/adidas1.jpg", // Ganti dengan foto Bos
+      title: "Adidas Adizero Evo SL Black White Men",
+      subtitle: "Adidas Adizero Evo SL Black White Men",
+      price: "Rp 1.999.000",
+      img: "/images/adidas.jpg", // Ganti dengan foto Bos
       color: "#7D8471"
     },
     {
@@ -28,7 +28,7 @@ export default function BGMFinalDeploy() {
       title: "Limited Drop 02",
       subtitle: "Adidas Adizero",
       price: "Rp 449.000",
-      img: "/images/adidas.jpg", // Ganti dengan foto Bos
+      img: "/images/adidas1.jpg", // Ganti dengan foto Bos
       color: "#7D8471"
     },
     {
