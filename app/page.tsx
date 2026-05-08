@@ -4,7 +4,7 @@ import React, { useState } from 'react'
 import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion'
 import { 
   ShoppingBag, Search, Menu, Zap, Globe, Star, 
-  ArrowRight, Instagram, MessageCircle, MapPin, ShieldCheck,
+  ArrowRight, Instagram, MessageCircle, ShieldCheck,
   ChevronLeft, ChevronRight
 } from 'lucide-react'
 
@@ -13,42 +13,64 @@ export default function BGMFinalDeploy() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
 
-  // DATA SLIDER HERO (Sesuaikan path gambar Bos)
+  // 1. DATA SLIDER HERO
   const sliders = [
     {
       id: 1,
-      title: "Adidas Adizero Evo SL Black White Men",
-      subtitle: "Adidas Adizero Evo SL Black White Men",
+      title: "Adidas Adizero Evo SL",
+      subtitle: "Black White Men",
       price: "Rp 1.999.000",
-      img: "/images/adidas.jpg", // Ganti dengan foto Bos
-      color: "#7D8471"
+      img: "/images/adidas.jpg", 
     },
     {
       id: 2,
       title: "Limited Drop 02",
-      subtitle: "Adidas Adizero",
+      subtitle: "Adidas Adizero Performance",
       price: "Rp 449.000",
-      img: "/images/adidas1.jpg", // Ganti dengan foto Bos
-      color: "#7D8471"
+      img: "/images/adidas1.jpg", 
     },
     {
       id: 3,
       title: "BGM Archive",
       subtitle: "Culture Heavy Hoodie",
       price: "Rp 379.000",
-      img: "/images/bagasmbois1.png", // Ganti dengan foto Bos
-      color: "#54594C"
+      img: "/images/bagasmbois1.png", 
     }
   ];
 
   const nextSlide = () => setCurrentSlider((prev) => (prev === sliders.length - 1 ? 0 : prev + 1));
   const prevSlide = () => setCurrentSlider((prev) => (prev === 0 ? sliders.length - 1 : prev - 1));
 
+  // 2. DATA PRODUCTS (GRID DENGAN CARD STYLE)
   const products = [
-    { id: 1, name: "Signature Mbois Tee", price: "Rp 189.000", tag: "Essential" },
-    { id: 2, name: "Atelier Work Jacket", price: "Rp 449.000", tag: "Limited" },
-    { id: 3, name: "Culture Heavy Hoodie", price: "Rp 379.000", tag: "Archive" },
-    { id: 4, name: "Cargo Utility Pants", price: "Rp 329.000", tag: "Drop" }
+    { 
+      id: 1, 
+      name: "Signature Mbois Tee", 
+      price: "Rp 189.000", 
+      tag: "Essential",
+      image: "/images/bagasmbois1.png" 
+    },
+    { 
+      id: 2, 
+      name: "Atelier Work Jacket", 
+      price: "Rp 449.000", 
+      tag: "Limited",
+      image: "/images/adidas1.jpg" 
+    },
+    { 
+      id: 3, 
+      name: "Culture Heavy Hoodie", 
+      price: "Rp 379.000", 
+      tag: "Archive",
+      image: "/images/bagasmbois1.png" 
+    },
+    { 
+      id: 4, 
+      name: "Cargo Utility Pants", 
+      price: "Rp 329.000", 
+      tag: "Drop",
+      image: "/images/adidas.jpg" 
+    }
   ];
 
   return (
@@ -92,11 +114,9 @@ export default function BGMFinalDeploy() {
         </div>
       </header>
 
-      {/* HERO SECTION WITH CARD SLIDER */}
-      <section className="relative min-h-screen pt-32 pb-20 flex flex-col items-center justify-center bg-[#F9F9F7]">
+      {/* 1. HERO SECTION */}
+      <section className="relative min-h-screen pt-40 pb-20 flex flex-col items-center justify-center bg-[#F9F9F7]">
         <div className="max-w-7xl mx-auto w-full px-6 grid lg:grid-cols-2 gap-16 items-center">
-          
-          {/* Teks Sebelah Kiri */}
           <motion.div 
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -115,7 +135,6 @@ export default function BGMFinalDeploy() {
             </button>
           </motion.div>
 
-          {/* Slider Card Sebelah Kanan */}
           <div className="relative h-[550px] w-full flex items-center justify-center">
             <AnimatePresence mode="wait">
               <motion.div
@@ -124,26 +143,15 @@ export default function BGMFinalDeploy() {
                 animate={{ opacity: 1, scale: 1, rotateY: 0 }}
                 exit={{ opacity: 0, scale: 0.9, rotateY: -20 }}
                 transition={{ duration: 0.6, ease: "easeOut" }}
-                className="relative w-full max-w-[400px] h-full bg-white rounded-[2rem] shadow-[0_40px_80px_-15px_rgba(0,0,0,0.15)] overflow-hidden border border-black/5"
+                className="relative w-full max-w-[400px] h-full bg-white rounded-[2rem] shadow-[0_40px_80px_-15px_rgba(0,0,0,0.15)] overflow-hidden border border-black/5 flex flex-col"
               >
-                {/* Gambar Card */}
-                <img 
-                  src={sliders[currentSlider].img} 
-                  className="w-full h-2/3 object-cover" 
-                  alt="Product" 
-                />
-                
-                {/* Info Card */}
+                <img src={sliders[currentSlider].img} className="w-full h-2/3 object-cover" alt="Hero" />
                 <div className="p-8 space-y-3">
                   <div className="flex justify-between items-start">
-                    <span className="text-[10px] font-black uppercase tracking-widest text-[#7D8471]">
-                      {sliders[currentSlider].title}
-                    </span>
+                    <span className="text-[10px] font-black uppercase tracking-widest text-[#7D8471]">{sliders[currentSlider].title}</span>
                     <span className="text-[10px] font-sans font-bold text-gray-300">0{currentSlider + 1}</span>
                   </div>
-                  <h3 className="text-2xl uppercase tracking-tight font-light leading-tight">
-                    {sliders[currentSlider].subtitle}
-                  </h3>
+                  <h3 className="text-2xl uppercase tracking-tight font-light leading-tight">{sliders[currentSlider].subtitle}</h3>
                   <div className="flex justify-between items-center pt-4">
                     <span className="text-sm font-sans font-bold">{sliders[currentSlider].price}</span>
                     <button className="bg-black text-white p-3 rounded-full hover:bg-[#7D8471] transition-colors">
@@ -153,21 +161,15 @@ export default function BGMFinalDeploy() {
                 </div>
               </motion.div>
             </AnimatePresence>
-
-            {/* Navigasi Slider */}
             <div className="absolute -bottom-10 flex gap-4">
-              <button onClick={prevSlide} className="p-4 bg-white rounded-full shadow-lg hover:bg-black hover:text-white transition-all">
-                <ChevronLeft size={20} />
-              </button>
-              <button onClick={nextSlide} className="p-4 bg-white rounded-full shadow-lg hover:bg-black hover:text-white transition-all">
-                <ChevronRight size={20} />
-              </button>
+              <button onClick={prevSlide} className="p-4 bg-white rounded-full shadow-lg hover:bg-black hover:text-white transition-all"><ChevronLeft size={20}/></button>
+              <button onClick={nextSlide} className="p-4 bg-white rounded-full shadow-lg hover:bg-black hover:text-white transition-all"><ChevronRight size={20}/></button>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 2. COLLECTION SECTION */}
+      {/* 2. COLLECTION GRID (SUDAH DISAMAKAN STYLE CARDNYA) */}
       <section id="collection" className="relative z-20 bg-white py-32 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-6">
@@ -177,23 +179,26 @@ export default function BGMFinalDeploy() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {products.map((item) => (
-              <motion.div key={item.id} whileHover={{ y: -10 }} className="group cursor-pointer">
-                <div className="aspect-[3/4] bg-[#F5F5F5] overflow-hidden mb-6 relative border border-black/5">
-                   <div className="absolute top-4 left-4 z-10 bg-white px-3 py-1 text-[8px] font-black uppercase tracking-widest">
-                      {item.tag}
+              <motion.div key={item.id} whileHover={{ y: -12 }} className="group cursor-pointer">
+                <div className="bg-white rounded-[2rem] shadow-[0_20px_50px_-12px_rgba(0,0,0,0.08)] overflow-hidden border border-black/5 flex flex-col h-full">
+                   <div className="relative aspect-[4/5] overflow-hidden">
+                      <div className="absolute top-5 left-5 z-10 bg-white/90 backdrop-blur-sm px-3 py-1 text-[8px] font-black uppercase tracking-widest rounded-full">{item.tag}</div>
+                      <img src={item.image} alt={item.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" />
                    </div>
-                   <div className="w-full h-full bg-[#EAE8E4] flex items-center justify-center text-gray-300 italic group-hover:scale-110 transition-transform duration-700">
-                      [Image]
+                   <div className="p-6 space-y-3 bg-white">
+                      <div className="flex justify-between items-start">
+                        <h4 className="text-[11px] font-bold uppercase tracking-tight text-gray-800 leading-tight">{item.name}</h4>
+                        <ArrowRight size={14} className="-rotate-45 opacity-20 group-hover:opacity-100 group-hover:text-[#7D8471] transition-all" />
+                      </div>
+                      <div className="flex justify-between items-center pt-2 border-t border-black/5">
+                        <p className="text-[12px] text-[#7D8471] font-sans font-black">{item.price}</p>
+                        <div className="w-8 h-8 rounded-full bg-gray-50 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-colors">
+                          <ShoppingBag size={12} />
+                        </div>
+                      </div>
                    </div>
-                </div>
-                <div className="flex justify-between items-start">
-                  <div>
-                    <h4 className="text-sm font-bold uppercase tracking-tight mb-1">{item.name}</h4>
-                    <p className="text-[10px] text-[#7D8471] font-sans font-bold">{item.price}</p>
-                  </div>
-                  <ArrowRight size={16} className="-rotate-45" />
                 </div>
               </motion.div>
             ))}
@@ -207,17 +212,17 @@ export default function BGMFinalDeploy() {
           <ShieldCheck size={40} className="mx-auto text-[#7D8471]" />
           <h3 className="text-5xl font-light uppercase italic tracking-tighter">Build with Respect, <br/> Worn with Pride.</h3>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-10 border-t border-white/10 pt-10">
-             {['Premium Fabric', 'Signature Cut', 'Limited Batch', 'Authenticity Card'].map(f => (
-               <div key={f} className="space-y-1">
-                 <p className="text-[8px] text-[#7D8471] font-bold uppercase tracking-widest">Guaranteed</p>
-                 <p className="text-[10px] font-bold uppercase">{f}</p>
-               </div>
-             ))}
+              {['Premium Fabric', 'Signature Cut', 'Limited Batch', 'Authenticity Card'].map(f => (
+                <div key={f} className="space-y-1">
+                  <p className="text-[8px] text-[#7D8471] font-bold uppercase tracking-widest">Guaranteed</p>
+                  <p className="text-[10px] font-bold uppercase">{f}</p>
+                </div>
+              ))}
           </div>
         </div>
       </section>
 
-      {/* 4. CONTACT & SHARELOK */}
+      {/* 4. CONTACT & LOCATION (KEMBALI) */}
       <section id="contact" className="py-32 px-6 bg-white border-b border-black/5">
         <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20">
           <div className="space-y-10">
@@ -239,10 +244,14 @@ export default function BGMFinalDeploy() {
           </div>
           
           <div className="space-y-6">
-            <div className="w-full aspect-video bg-[#F5F5F5] border border-black/5 flex items-center justify-center italic text-gray-400 text-xs grayscale">
-              [Google Maps Sharelok Embed]
+            {/* Embed Maps Placeholder (Ganti src kalau punya link iframe) */}
+            <div className="w-full aspect-video bg-[#F5F5F5] rounded-[2rem] border border-black/5 overflow-hidden">
+               <iframe 
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15830.123!2d112.79!3d-7.28!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7f9!2sSukolilo%2C%20Surabaya!5e0!3m2!1sid!2sid!4v1700000000" 
+                width="100%" height="100%" style={{ border: 0, filter: 'grayscale(1)' }} allowFullScreen loading="lazy">
+               </iframe>
             </div>
-            <p className="text-xs font-sans text-gray-500 uppercase">
+            <p className="text-xs font-sans text-gray-500 uppercase tracking-wider">
               Jl. Mbois Nomor 1, Sukolilo, Surabaya <br/>
               Mon - Sat // 10.00 - 22.00
             </p>
@@ -258,14 +267,10 @@ export default function BGMFinalDeploy() {
         </div>
       </footer>
 
-      {/* PROGRESS BAR */}
       <motion.div style={{ scaleX }} className="fixed top-0 left-0 right-0 h-[4px] bg-[#7D8471] z-[2000] origin-left" />
 
       <style jsx global>{`
-        @keyframes marquee {
-          0% { transform: translateX(0); }
-          100% { transform: translateX(-50%); }
-        }
+        @keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
         html { scroll-behavior: smooth; }
         ::-webkit-scrollbar { width: 5px; }
         ::-webkit-scrollbar-thumb { background: #7D8471; }
