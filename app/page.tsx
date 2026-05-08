@@ -1,268 +1,275 @@
 'use client'
 
-import { motion, useScroll, useSpring, useTransform, useMotionValue } from 'framer-motion'
-import { useRef, useState } from 'react'
-import { ArrowUpRight, Github, Instagram, Linkedin, Mail, Zap, Code2, Database, Monitor, ArrowRight } from 'lucide-react'
+import React, { useState } from 'react'
+import { motion, useScroll, useSpring, AnimatePresence } from 'framer-motion'
+import { 
+  ShoppingBag, Search, Menu, Zap, Globe, Star, 
+  ArrowRight, Instagram, MessageCircle, MapPin, ShieldCheck,
+  ChevronLeft, ChevronRight
+} from 'lucide-react'
 
-/* ---------- ANIMATION VARIANTS ---------- */
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.2, delayChildren: 0.3 }
-  }
-}
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { duration: 0.8, ease: [0.22, 1, 0.36, 1] } 
-  }
-}
-
-/* ---------- MAGNETIC BUTTON COMPONENT ---------- */
-function MagneticButton({ children, className }: { children: React.ReactNode, className?: string }) {
-  const mouseX = useMotionValue(0);
-  const mouseY = useMotionValue(0);
-
-  function handleMouseMove(e: React.MouseEvent) {
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - (rect.left + rect.width / 2);
-    const y = e.clientY - (rect.top + rect.height / 2);
-    mouseX.set(x * 0.4);
-    mouseY.set(y * 0.4);
-  }
-
-  function handleMouseLeave() {
-    mouseX.set(0);
-    mouseY.set(0);
-  }
-
-  return (
-    <motion.button
-      onMouseMove={handleMouseMove}
-      onMouseLeave={handleMouseLeave}
-      style={{ x: mouseX, y: mouseY }}
-      transition={{ type: "spring", stiffness: 150, damping: 15 }}
-      className={className}
-    >
-      {children}
-    </motion.button>
-  );
-}
-
-export default function Portfolio() {
+export default function BGMFinalDeploy() {
+  const [currentSlider, setCurrentSlider] = useState(0);
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, { stiffness: 100, damping: 30 });
-  
-  // Parallax effect for Background Text
-  const bgTextY = useTransform(scrollYProgress, [0, 1], [0, -500]);
+
+  // DATA SLIDER HERO (Sesuaikan path gambar Bos)
+  const sliders = [
+    {
+      id: 1,
+      title: "Limited Drop 01",
+      subtitle: "Atelier Work Jacket",
+      price: "Rp 449.000",
+      img: "/images/adidas1.jpg", // Ganti dengan foto Bos
+      color: "#7D8471"
+    },
+    {
+      id: 2,
+      title: "Limited Drop 02",
+      subtitle: "Adidas Adizero",
+      price: "Rp 449.000",
+      img: "/images/adidas.jpg", // Ganti dengan foto Bos
+      color: "#7D8471"
+    },
+    {
+      id: 3,
+      title: "BGM Archive",
+      subtitle: "Culture Heavy Hoodie",
+      price: "Rp 379.000",
+      img: "/images/bagasmbois1.png", // Ganti dengan foto Bos
+      color: "#54594C"
+    }
+  ];
+
+  const nextSlide = () => setCurrentSlider((prev) => (prev === sliders.length - 1 ? 0 : prev + 1));
+  const prevSlide = () => setCurrentSlider((prev) => (prev === 0 ? sliders.length - 1 : prev - 1));
+
+  const products = [
+    { id: 1, name: "Signature Mbois Tee", price: "Rp 189.000", tag: "Essential" },
+    { id: 2, name: "Atelier Work Jacket", price: "Rp 449.000", tag: "Limited" },
+    { id: 3, name: "Culture Heavy Hoodie", price: "Rp 379.000", tag: "Archive" },
+    { id: 4, name: "Cargo Utility Pants", price: "Rp 329.000", tag: "Drop" }
+  ];
 
   return (
-    <main className="relative bg-[#FBFBFD] text-[#1D1D1F] overflow-x-hidden font-sans antialiased">
-      {/* 1. PROGRESS BAR */}
-      <motion.div style={{ scaleX }} className="fixed top-0 left-0 right-0 h-[3px] bg-indigo-600 z-[100] origin-left" />
-
-      {/* 2. HEADER */}
-      <header className="fixed top-0 w-full z-50 px-6 md:px-12 py-5 flex justify-between items-center bg-white/80 backdrop-blur-xl border-b border-black/[0.03]">
-        <motion.div 
-          initial={{ opacity: 0, x: -20 }} 
-          animate={{ opacity: 1, x: 0 }}
-          className="text-xl font-black tracking-tighter cursor-pointer"
-        >
-          BAGAS<span className="text-indigo-600">.</span>
-        </motion.div>
+    <main className="min-h-screen bg-[#FDFDFB] text-[#1A1A1A] font-serif antialiased selection:bg-[#7D8471] selection:text-white overflow-x-hidden">
+      
+      {/* HEADER SECTION */}
+      <header className="fixed top-0 w-full z-[1000] bg-white/90 backdrop-blur-md border-b border-black/5">
+        <div className="max-w-7xl mx-auto px-6 py-5 flex justify-between items-center">
+          <h1 className="text-2xl font-light tracking-tighter uppercase italic">
+            BGM<span className="text-[#7D8471]">.</span>
+          </h1>
+          <nav className="hidden md:flex gap-10 text-[9px] font-bold uppercase tracking-[0.3em] text-gray-500">
+            <a href="#collection" className="hover:text-black transition-all">Collections</a>
+            <a href="#about" className="hover:text-black transition-all">Heritage</a>
+            <a href="#contact" className="hover:text-black transition-all">Contact</a>
+          </nav>
+          <div className="flex gap-6 items-center">
+            <Search size={18} />
+            <div className="relative cursor-pointer">
+              <ShoppingBag size={18} />
+              <span className="absolute -top-2 -right-2 bg-[#7D8471] text-white text-[8px] w-4 h-4 flex items-center justify-center rounded-full">0</span>
+            </div>
+            <Menu size={20} className="md:hidden" />
+          </div>
+        </div>
         
-        <nav className="hidden md:flex gap-10 text-[10px] font-black uppercase tracking-[0.3em] text-gray-400">
-          {['About', 'Projects', 'Contact'].map((item) => (
-            <motion.a 
-              whileHover={{ y: -2, color: '#000' }}
-              key={item} href={`#${item.toLowerCase()}`} 
-            >
-              {item}
-            </motion.a>
-          ))}
-        </nav>
-
-        <MagneticButton className="w-10 h-10 rounded-full bg-black flex items-center justify-center text-white shadow-lg">
-          <Zap size={16} fill="currentColor" />
-        </MagneticButton>
+        {/* MARQUEE */}
+        <div className="w-full bg-[#7D8471] py-2 overflow-hidden border-t border-white/10">
+          <div className="flex animate-[marquee_30s_linear_infinite] whitespace-nowrap gap-12 text-[8px] font-bold uppercase tracking-[0.4em] text-white font-sans">
+            {[1, 2, 3, 4].map((i) => (
+              <div key={i} className="flex gap-12 items-center">
+                 <span>New Drop: Atelier Collection 2026</span>
+                 <Zap size={10} fill="white" />
+                 <span>Quality Over Quantity</span>
+                 <Globe size={10} />
+                 <span>Mbois is a Choice</span>
+                 <Star size={10} fill="white" />
+              </div>
+            ))}
+          </div>
+        </div>
       </header>
 
-      {/* 3. HERO SECTION */}
-      <section className="relative min-h-screen flex items-center justify-center px-6">
-        {/* Parallax Background Text */}
-        <motion.div 
-          style={{ y: bgTextY }}
-          className="absolute inset-0 flex items-center justify-center overflow-hidden pointer-events-none select-none"
-        >
-          <h1 className="text-[35vw] font-black leading-none opacity-[0.03] text-black italic">
-            BAGAS
-          </h1>
-        </motion.div>
-
-        <motion.div 
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-          className="relative z-10 w-full max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between"
-        >
-          <div className="md:w-3/5">
-            <motion.div variants={itemVariants} className="mb-8">
-              <span className="px-5 py-2 rounded-full border border-indigo-100 text-[10px] font-black uppercase tracking-[0.3em] bg-indigo-50/50 text-indigo-600 inline-flex items-center gap-3">
-                <span className="relative flex h-2 w-2">
-                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-indigo-400 opacity-75"></span>
-                  <span className="relative inline-flex rounded-full h-2 w-2 bg-indigo-600"></span>
-                </span>
-                Now Open for Commissions
-              </span>
-            </motion.div>
-
-            <motion.h2 variants={itemVariants} className="text-6xl md:text-[120px] font-black leading-[0.85] tracking-[ -0.05em] mb-12">
-              BUILDING <br /> 
-              <span className="bg-gradient-to-r from-indigo-600 via-rose-500 to-indigo-600 bg-clip-text text-transparent animate-shimmer">
-                MODERN
-              </span> <br />
-              EXPERIENCE.
-            </motion.h2>
-          </div>
-
-          <div className="md:w-1/4 mt-12 md:mt-0 flex flex-col items-start md:items-end">
-            <motion.p variants={itemVariants} className="text-2xl font-bold leading-tight mb-10 text-gray-800 md:text-right">
-              Bridging the gap <br /> between Design <br /> & Engineering.
-            </motion.p>
-            <motion.div variants={itemVariants}>
-              <MagneticButton className="group flex items-center gap-4 text-[11px] font-black uppercase tracking-widest bg-black text-white px-10 py-6 rounded-full hover:bg-indigo-600 transition-all shadow-2xl">
-                Get In Touch <ArrowRight size={16} className="group-hover:translate-x-2 transition-transform" />
-              </MagneticButton>
-            </motion.div>
-          </div>
-        </motion.div>
-      </section>
-
-      {/* 4. SKILLS SECTION */}
-      <section id="about" className="py-40 px-6 bg-white relative z-10">
-        <div className="max-w-7xl mx-auto">
+      {/* HERO SECTION WITH CARD SLIDER */}
+      <section className="relative min-h-screen pt-32 pb-20 flex flex-col items-center justify-center bg-[#F9F9F7]">
+        <div className="max-w-7xl mx-auto w-full px-6 grid lg:grid-cols-2 gap-16 items-center">
+          
+          {/* Teks Sebelah Kiri */}
           <motion.div 
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={containerVariants}
-            className="grid md:grid-cols-3 gap-20"
+            initial={{ opacity: 0, x: -50 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.8 }}
+            className="space-y-6"
           >
-            {[
-              { icon: <Monitor />, title: 'Frontend Architecture', desc: 'React, Next.js, and high-end animations using Framer Motion.' },
-              { icon: <Database />, title: 'Fullstack Systems', desc: 'Secure APIs, scalable databases, and serverless cloud solutions.' },
-              { icon: <Code2 />, title: 'Code Performance', desc: 'Optimizing for speed, SEO, and flawless user experiences.' },
-            ].map((skill, i) => (
-              <motion.div key={i} variants={itemVariants} className="group space-y-6">
-                <div className="w-14 h-14 rounded-2xl bg-indigo-50 flex items-center justify-center text-indigo-600 group-hover:scale-110 group-hover:bg-indigo-600 group-hover:text-white transition-all duration-500">
-                  {skill.icon}
-                </div>
-                <h4 className="text-sm font-black uppercase tracking-widest">{skill.title}</h4>
-                <p className="text-gray-500 text-sm leading-relaxed font-medium">{skill.desc}</p>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-
-      {/* 5. PROJECTS GALLERY */}
-      <section id="projects" className="py-40 px-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex flex-col mb-32">
-            <motion.p 
-              initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-              className="text-[10px] font-black uppercase tracking-[0.5em] text-indigo-600 mb-6"
-            >
-              Case Studies
-            </motion.p>
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }}
-              className="text-4xl md:text-6xl font-bold tracking-tighter"
-            >
-              Selected digital works.
-            </motion.h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-x-20 gap-y-40">
-            {[
-              { title: 'Nexus Finance', cat: 'Dashboard / 2024', img: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=2070&auto=format&fit=crop' },
-              { title: 'Luxe Archive', cat: 'E-Commerce / 2024', img: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?q=80&w=2070&auto=format&fit=crop' },
-              { title: 'Cognitive AI', cat: 'SaaS / 2023', img: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?q=80&w=2070&auto=format&fit=crop' },
-              { title: 'Studio Mono', cat: 'Architecture / 2023', img: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop' },
-            ].map((proj, i) => (
-              <motion.div 
-                key={i}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-100px" }}
-                className="group cursor-pointer"
-              >
-                <div className="relative aspect-[4/3] bg-gray-200 rounded-sm overflow-hidden mb-10 shadow-2xl">
-                  <motion.img 
-                    whileHover={{ scale: 1.1, rotate: -1 }}
-                    transition={{ duration: 0.8, ease: [0.33, 1, 0.68, 1] }}
-                    src={proj.img} 
-                    alt={proj.title}
-                    className="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-1000"
-                  />
-                  <div className="absolute inset-0 bg-indigo-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                </div>
-                <div className="flex justify-between items-end">
-                  <div className="space-y-3">
-                    <p className="text-[9px] font-black uppercase tracking-[0.3em] text-indigo-600">{proj.cat}</p>
-                    <h3 className="text-3xl font-bold tracking-tighter group-hover:translate-x-2 transition-transform duration-500">{proj.title}</h3>
-                  </div>
-                  <div className="w-14 h-14 rounded-full border border-black/5 flex items-center justify-center group-hover:bg-black group-hover:text-white transition-all duration-500">
-                    <ArrowUpRight size={24} />
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* 6. FOOTER */}
-      <footer id="contact" className="py-48 px-6 bg-white border-t border-black/[0.02]">
-        <div className="max-w-7xl mx-auto text-center">
-          <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            whileInView={{ opacity: 1, scale: 1 }}
-            viewport={{ once: true }}
-            className="space-y-16"
-          >
-            <h2 className="text-7xl md:text-[12vw] font-black tracking-[ -0.05em] leading-none uppercase">
-              LET'S <span className="text-indigo-600 italic">TALK.</span>
+            <span className="text-[#7D8471] text-[10px] font-bold uppercase tracking-[0.8em]">Premium Atelier</span>
+            <h2 className="text-7xl md:text-8xl font-extralight leading-[0.9] tracking-tighter uppercase">
+              Mbois <br /> <span className="opacity-30 italic font-light">Culture.</span>
             </h2>
-            <div className="flex justify-center">
-              <MagneticButton className="text-2xl md:text-5xl font-bold border-b-4 border-indigo-600 pb-4 hover:text-indigo-600 transition-colors">
-                hello@bagas.dev
-              </MagneticButton>
-            </div>
+            <p className="text-sm text-gray-500 italic max-w-sm leading-relaxed font-sans">
+              Eksplorasi gaya autentik dengan kualitas hardware terbaik. Karena mbois adalah hak segala bangsa.
+            </p>
+            <button className="bg-black text-white px-10 py-5 text-[10px] font-bold uppercase tracking-widest rounded-full hover:bg-[#7D8471] transition-all">
+              Shop Collection
+            </button>
           </motion.div>
 
-          <div className="mt-60 flex flex-col md:flex-row justify-between items-center gap-10 pt-10 border-t border-gray-100">
-            <div className="text-[10px] font-black uppercase tracking-[0.5em] text-gray-300">
-              © 2026 BAGAS — BUILT WITH NEXT.JS
-            </div>
-            <div className="flex gap-10">
-              {[Github, Instagram, Linkedin].map((Icon, i) => (
-                <motion.a 
-                  key={i} href="#" 
-                  whileHover={{ y: -5, color: '#4F46E5' }}
-                  className="text-gray-400 transition-colors"
-                >
-                  <Icon size={20} />
-                </motion.a>
-              ))}
+          {/* Slider Card Sebelah Kanan */}
+          <div className="relative h-[550px] w-full flex items-center justify-center">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={currentSlider}
+                initial={{ opacity: 0, scale: 0.9, rotateY: 20 }}
+                animate={{ opacity: 1, scale: 1, rotateY: 0 }}
+                exit={{ opacity: 0, scale: 0.9, rotateY: -20 }}
+                transition={{ duration: 0.6, ease: "easeOut" }}
+                className="relative w-full max-w-[400px] h-full bg-white rounded-[2rem] shadow-[0_40px_80px_-15px_rgba(0,0,0,0.15)] overflow-hidden border border-black/5"
+              >
+                {/* Gambar Card */}
+                <img 
+                  src={sliders[currentSlider].img} 
+                  className="w-full h-2/3 object-cover" 
+                  alt="Product" 
+                />
+                
+                {/* Info Card */}
+                <div className="p-8 space-y-3">
+                  <div className="flex justify-between items-start">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-[#7D8471]">
+                      {sliders[currentSlider].title}
+                    </span>
+                    <span className="text-[10px] font-sans font-bold text-gray-300">0{currentSlider + 1}</span>
+                  </div>
+                  <h3 className="text-2xl uppercase tracking-tight font-light leading-tight">
+                    {sliders[currentSlider].subtitle}
+                  </h3>
+                  <div className="flex justify-between items-center pt-4">
+                    <span className="text-sm font-sans font-bold">{sliders[currentSlider].price}</span>
+                    <button className="bg-black text-white p-3 rounded-full hover:bg-[#7D8471] transition-colors">
+                      <ShoppingBag size={16} />
+                    </button>
+                  </div>
+                </div>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Navigasi Slider */}
+            <div className="absolute -bottom-10 flex gap-4">
+              <button onClick={prevSlide} className="p-4 bg-white rounded-full shadow-lg hover:bg-black hover:text-white transition-all">
+                <ChevronLeft size={20} />
+              </button>
+              <button onClick={nextSlide} className="p-4 bg-white rounded-full shadow-lg hover:bg-black hover:text-white transition-all">
+                <ChevronRight size={20} />
+              </button>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* 2. COLLECTION SECTION */}
+      <section id="collection" className="relative z-20 bg-white py-32 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-6">
+            <div className="space-y-4">
+              <span className="text-[#7D8471] font-bold text-[10px] tracking-widest uppercase italic">01 // Summer Drop</span>
+              <h3 className="text-5xl font-light uppercase tracking-tighter">Current <br/> In-Stock</h3>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+            {products.map((item) => (
+              <motion.div key={item.id} whileHover={{ y: -10 }} className="group cursor-pointer">
+                <div className="aspect-[3/4] bg-[#F5F5F5] overflow-hidden mb-6 relative border border-black/5">
+                   <div className="absolute top-4 left-4 z-10 bg-white px-3 py-1 text-[8px] font-black uppercase tracking-widest">
+                      {item.tag}
+                   </div>
+                   <div className="w-full h-full bg-[#EAE8E4] flex items-center justify-center text-gray-300 italic group-hover:scale-110 transition-transform duration-700">
+                      [Image]
+                   </div>
+                </div>
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h4 className="text-sm font-bold uppercase tracking-tight mb-1">{item.name}</h4>
+                    <p className="text-[10px] text-[#7D8471] font-sans font-bold">{item.price}</p>
+                  </div>
+                  <ArrowRight size={16} className="-rotate-45" />
+                </div>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 3. BRANDING SECTION */}
+      <section id="about" className="bg-[#1A1A1A] py-32 px-6 text-white text-center">
+        <div className="max-w-4xl mx-auto space-y-10">
+          <ShieldCheck size={40} className="mx-auto text-[#7D8471]" />
+          <h3 className="text-5xl font-light uppercase italic tracking-tighter">Build with Respect, <br/> Worn with Pride.</h3>
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-10 border-t border-white/10 pt-10">
+             {['Premium Fabric', 'Signature Cut', 'Limited Batch', 'Authenticity Card'].map(f => (
+               <div key={f} className="space-y-1">
+                 <p className="text-[8px] text-[#7D8471] font-bold uppercase tracking-widest">Guaranteed</p>
+                 <p className="text-[10px] font-bold uppercase">{f}</p>
+               </div>
+             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* 4. CONTACT & SHARELOK */}
+      <section id="contact" className="py-32 px-6 bg-white border-b border-black/5">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-20">
+          <div className="space-y-10">
+            <h3 className="text-5xl font-light uppercase tracking-tighter">Location</h3>
+            <div className="space-y-6">
+              <a href="#" className="flex items-center gap-4 group">
+                <div className="w-12 h-12 rounded-full border border-black/5 flex items-center justify-center group-hover:bg-[#7D8471] group-hover:text-white transition-all">
+                  <MessageCircle size={20} />
+                </div>
+                <span className="text-[10px] font-bold uppercase tracking-widest italic">WhatsApp Admin</span>
+              </a>
+              <a href="#" className="flex items-center gap-4 group">
+                <div className="w-12 h-12 rounded-full border border-black/5 flex items-center justify-center group-hover:bg-[#7D8471] group-hover:text-white transition-all">
+                  <Instagram size={20} />
+                </div>
+                <span className="text-[10px] font-bold uppercase tracking-widest italic">@bagasgaulmbois</span>
+              </a>
+            </div>
+          </div>
+          
+          <div className="space-y-6">
+            <div className="w-full aspect-video bg-[#F5F5F5] border border-black/5 flex items-center justify-center italic text-gray-400 text-xs grayscale">
+              [Google Maps Sharelok Embed]
+            </div>
+            <p className="text-xs font-sans text-gray-500 uppercase">
+              Jl. Mbois Nomor 1, Sukolilo, Surabaya <br/>
+              Mon - Sat // 10.00 - 22.00
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="py-10 px-6 bg-white">
+        <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center border-t border-black/5 pt-10 gap-6">
+          <h2 className="text-2xl font-light italic">BGM<span className="text-[#7D8471]">.</span></h2>
+          <p className="text-[9px] font-bold text-gray-400 uppercase tracking-[0.5em]">© 2026 BGM ATELIER — SURABAYA</p>
         </div>
       </footer>
+
+      {/* PROGRESS BAR */}
+      <motion.div style={{ scaleX }} className="fixed top-0 left-0 right-0 h-[4px] bg-[#7D8471] z-[2000] origin-left" />
+
+      <style jsx global>{`
+        @keyframes marquee {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(-50%); }
+        }
+        html { scroll-behavior: smooth; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: #7D8471; }
+      `}</style>
     </main>
   )
 }
