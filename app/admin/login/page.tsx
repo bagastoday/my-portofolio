@@ -15,21 +15,31 @@ export default function LoginPage() {
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
+
     setLoading(true)
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    })
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      })
 
-    setLoading(false)
+      console.log('LOGIN DATA:', data)
+      console.log('LOGIN ERROR:', error)
 
-    if (error) {
-      alert(error.message)
-      return
+      if (error) {
+        alert(error.message)
+        return
+      }
+
+      router.push('/admin/products')
+      router.refresh()
+    } catch (err) {
+      console.log('CATCH ERROR:', err)
+      alert('Login gagal. Cek console untuk detail error.')
+    } finally {
+      setLoading(false)
     }
-
-    router.push('/admin/products')
   }
 
   return (
