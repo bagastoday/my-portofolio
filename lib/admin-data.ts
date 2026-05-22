@@ -1,0 +1,66 @@
+export const initialProducts = [
+  {
+    id: 1,
+    name: 'Signature Mbois Tee',
+    price: 189000,
+    stock: 24,
+    sold: 81,
+    tag: 'Essential',
+    status: 'Active',
+    image: '/images/bagas.png',
+  },
+  {
+    id: 2,
+    name: 'Atelier Work Jacket',
+    price: 449000,
+    stock: 9,
+    sold: 31,
+    tag: 'Limited',
+    status: 'Active',
+    image: '/images/adidas1.jpg',
+  },
+  {
+    id: 3,
+    name: 'Culture Heavy Hoodie',
+    price: 379000,
+    stock: 12,
+    sold: 48,
+    tag: 'Archive',
+    status: 'Active',
+    image: '/images/bagasmbois1.png',
+  },
+  {
+    id: 4,
+    name: 'Cargo Utility Pants',
+    price: 329000,
+    stock: 0,
+    sold: 22,
+    tag: 'Drop',
+    status: 'Sold Out',
+    image: '/images/adidas.jpg',
+  },
+]
+
+export const orders = [
+  {
+    id: 'BGM-1027',
+    customer: 'Raka Pratama',
+    product: 'Signature Mbois Tee',
+    total: 189000,
+    status: 'Paid',
+  },
+  {
+    id: 'BGM-1028',
+    customer: 'Dimas Arya',
+    product: 'Atelier Work Jacket',
+    total: 449000,
+    status: 'Packing',
+  },
+  {
+    id: 'BGM-1029',
+    customer: 'Bagas Mbois',
+    product: 'Culture Heavy Hoodie',
+    total: 379000,
+    status: 'Delivered',
+  },
+]
